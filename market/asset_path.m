@@ -3,7 +3,7 @@ d = diff(log(data));
 
 drift=mean(d)+0.5*var(d)*var(d);
 vol=var(d);
-S0=19.03;
+S0=data(0);
 
 T=2;
 dt=0.01;
