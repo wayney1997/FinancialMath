@@ -26,6 +26,7 @@ for n in range(1,100):
         stock[i+1]=stock[i]*np.exp(drift*dt+vol*np.sqrt(dt)*x[i])
     plt.plot(t,stock)
 
+plt.title('NASDAQ:')
 plt.xlabel('Day(s) after current time')
 plt.ylabel('USD($)')    
 plt.show()
