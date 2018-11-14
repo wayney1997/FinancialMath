@@ -1,12 +1,12 @@
 import numpy as np
+import import matplotlib.pyplot as plt
+import pandas_datareader.data as web
 import matplotlib.pyplot as plt
 
-stock_data_f = open('data.txt','r')
-stock_data = []
+start = '2017-01-01'
+end = dt.date.today()
+stock_data = web.DataReader('INTC','iex',start,end)['close'].tolist()
 dS = []
-
-for line in stock_data_f :
-    stock_data.extend([float(i) for i in line.split()])
 
 for i in stock_data :
     dS.append(np.log(i+1)-np.log(i))
