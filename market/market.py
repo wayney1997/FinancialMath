@@ -3,7 +3,7 @@ import pandas_datareader.data as web
 import matplotlib.pyplot as plt
 import datetime 
 
-start = '2017-01-01'
+start = datetime.datetime.now() - datetime.timedelta(days=5*365)
 end = datetime.date.today()
 stock_data = web.DataReader('INTC','iex',start,end)['close'].tolist()
 dS = []
