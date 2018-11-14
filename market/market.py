@@ -1,7 +1,7 @@
 import numpy as np
-import import matplotlib.pyplot as plt
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
+import datetime as dt
 
 start = '2017-01-01'
 end = dt.date.today()
