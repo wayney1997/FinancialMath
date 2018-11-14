@@ -1,10 +1,10 @@
 import numpy as np
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-import datetime as dt
+import datetime 
 
 start = '2017-01-01'
-end = dt.date.today()
+end = datetime.date.today()
 stock_data = web.DataReader('INTC','iex',start,end)['close'].tolist()
 dS = []
 
