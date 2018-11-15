@@ -1,11 +1,17 @@
 import numpy as np
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
-import datetime 
+import datetime
+import sys
+
+T=int(sys.argv[2])
+dt=float(sys.argv[3])
+N=int(sys.argv[4])
+title = 'NASDAQ:'+sys.argv[1]
 
 start = datetime.datetime.now() - datetime.timedelta(days=5*365)
 end = datetime.date.today()
-stock_data = web.DataReader('INTC','iex',start,end)['close'].tolist()
+stock_data = web.DataReader(sys.argv[1],'iex',start,end)['close'].tolist()
 dS = []
 
 for i in stock_data :
@@ -14,8 +20,6 @@ for i in stock_data :
 vol = np.std(dS)
 drift = np.mean(dS)+0.5*vol*vol
 
-T=2
-dt=0.01
 t=np.arange(0,T,dt)
 stock=np.zeros(len(t))
 stock[0]=stock_data[-1]
@@ -26,7 +30,7 @@ for n in range(1,100):
         stock[i+1]=stock[i]*np.exp(drift*dt+vol*np.sqrt(dt)*x[i])
     plt.plot(t,stock)
 
-plt.title('NASDAQ:')
+plt.title(title)
 plt.xlabel('Day(s) after current time')
 plt.ylabel('USD($)')    
 plt.show()
