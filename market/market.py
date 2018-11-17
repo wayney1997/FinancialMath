@@ -5,22 +5,23 @@ import matplotlib.pyplot as plt
 import datetime, argparse
 
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(description="Montecarlo simulation code for NASDAQ asset paths using data from IEX. Asset price model based on geometrical Brownian asset model under simple efficient market assumptions.")
 parser.add_argument("symbol",help="NASDAQ ticker symbol")
-parser.add_argument("T",type=int,help="length of total time interval")
-parser.add_argument("dt",type=float,help="time interval to iterate")
+parser.add_argument("T",type=int,help="time to expiry (days)")
+parser.add_argument("dt",type=float,help="length of the step to iterate until expiry")
 parser.add_argument("N",type=int,help="number of sample paths")
-parser.add_argument("-s","--save",action="store_true",help="save simulation data as csv")
+parser.add_argument("-s","--save",action="store_true",help="save simulation data as csv, format: date_symbol_N_T_dt")
 args = parser.parse_args()
-
-if args.save:
-    savelist = []
-    print("saving ",args.N," simulation results")
-
-title = 'NASDAQ:'+ args.symbol
 
 start = datetime.datetime.now() - datetime.timedelta(days=5*365)
 end = datetime.date.today()
+
+if args.save:
+    savelist = []
+    filename = str(end) + '_' + args.symbol + '_' + str(args.N) + '_' + str(args.T) + '_' + str(args.dt)+'.csv'
+    print("saving ",args.N," simulation results")
+
+title = 'NASDAQ:'+ args.symbol
 stock_data = web.DataReader(args.symbol,'iex',start,end)['close'].tolist()
 dS = []
 
@@ -43,7 +44,7 @@ for n in range(0,args.N):
 
 if args.save:
     df = pd.DataFrame(savelist)
-    df.to_csv("test.csv")
+    df.to_csv(filename)
 
 plt.title(title)
 plt.xlabel('Day(s) after current time')
