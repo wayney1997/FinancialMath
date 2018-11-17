@@ -13,10 +13,8 @@ parser.add_argument("N",type=int,help="number of sample paths")
 parser.add_argument("-s","--save",action="store_true",help="save simulation data as csv")
 args = parser.parse_args()
 
-savelist = []
-
 if args.save:
-#    savelist = []
+    savelist = []
     print("saving ",args.N," simulation results")
 
 title = 'NASDAQ:'+ args.symbol
@@ -33,15 +31,14 @@ vol = np.std(dS)
 drift = np.mean(dS)+0.5*vol*vol
 
 t=np.arange(0,args.T+args.dt,args.dt)
-stock=np.zeros(len(t))
-stock[0]=stock_data[-1]
 
-for n in range(1,args.N):
+for n in range(0,args.N):
+    stock = np.zeros(len(t))
+    stock[0]=stock_data[-1]
     x=np.random.normal(0,1,len(t))
     for i in range(0,len(t)-1):
         stock[i+1]=stock[i]*np.exp(drift*args.dt+vol*np.sqrt(args.dt)*x[i])
     savelist.append(stock)
-    print(savelist)
     plt.plot(t,stock)
 
 if args.save:
