@@ -39,7 +39,8 @@ for n in range(0,args.N):
     x=np.random.normal(0,1,len(t))
     for i in range(0,len(t)-1):
         stock[i+1]=stock[i]*np.exp(drift*args.dt+vol*np.sqrt(args.dt)*x[i])
-    savelist.append(stock)
+    if args.save:
+        savelist.append(stock)
     plt.plot(t,stock)
 
 if args.save:
